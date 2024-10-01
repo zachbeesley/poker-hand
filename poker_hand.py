@@ -363,11 +363,11 @@ def probs_of_win(hand1, hand2, table):
         P1_wins = 0
         P2_wins = 0
         ties = 0
-        for card in list(combinations(card_deck, 1)):
+        for card in list(random.sample(card_deck, 15)):
             #print(card)
             if card not in table + hand1 + hand2:
-                p1_best_hand = texas_best(hand1, table + [card[0]])
-                p2_best_hand = texas_best(hand2, table + [card[0]])
+                p1_best_hand = texas_best(hand1, table + [card])
+                p2_best_hand = texas_best(hand2, table + [card])
 
                 if ranking_final(p1_best_hand) > ranking_final(p2_best_hand):
                     P1_wins += 1
@@ -387,13 +387,13 @@ def probs_of_win(hand1, hand2, table):
         P2_wins = 0
         ties = 0
 
-        for card1 in list(combinations(card_deck, 1)):
+        for card1 in list(random.sample(card_deck, 15)):
             #print(card)
-            if card1[0] not in table + hand1 + hand2:
-                for card2 in list(combinations(card_deck, 1)):
-                    if card2[0] not in table + hand1 + hand2 and card2 != card1:
-                        p1_best_hand = texas_best(hand1, table + [card1[0], card2[0]])
-                        p2_best_hand = texas_best(hand2, table + [card1[0], card2[0]])
+            if card1 not in table + hand1 + hand2:
+                for card2 in list(random.sample(card_deck, 15)):
+                    if card2 not in table + hand1 + hand2 and card2 != card1:
+                        p1_best_hand = texas_best(hand1, table + [card1, card2])
+                        p2_best_hand = texas_best(hand2, table + [card1, card2])
 
                         if ranking_final(p1_best_hand) > ranking_final(p2_best_hand):
                             P1_wins += 1
@@ -415,12 +415,12 @@ def winning_hand(hand, table, num_players):
     P2_wins = 0
     ties = 0
     if len(table) == 5:
-        for opp_card1 in list(combinations(card_deck, 1)):
-            if opp_card1[0] not in hand + table:
-                for opp_card2 in list(combinations(card_deck, 1)):
-                    if opp_card2[0] not in hand + table and opp_card2 != opp_card1:
+        for opp_card1 in random.sample(card_deck, 15):
+            if opp_card1 not in hand + table:
+                for opp_card2 in random.sample(card_deck, 15):
+                    if opp_card2 not in hand + table and opp_card2 != opp_card1:
                         p1_best_hand = texas_best(hand, table)
-                        p2_best_hand = texas_best([opp_card1[0], opp_card2[0]], table)
+                        p2_best_hand = texas_best([opp_card1, opp_card2], table)
                         if ranking_final(p1_best_hand) > ranking_final(p2_best_hand):
                             P1_wins += 1
                         elif ranking_final(p1_best_hand) == ranking_final(p2_best_hand):
@@ -440,14 +440,14 @@ def winning_hand(hand, table, num_players):
         return "Win prob: {0:.2f}".format(group_win_prob) #, group_lose_prob, group_tie_prob)
 
     if len(table) == 4:
-        for opp_card1 in list(combinations(card_deck, 1)):
-            if opp_card1[0] not in hand + table:
-                for opp_card2 in list(combinations(card_deck, 1)):
-                    if opp_card2[0] not in hand + table and opp_card2 != opp_card1:
-                        for draw_card in list(combinations(card_deck, 1)):
-                            if draw_card[0] not in hand + table and opp_card2 != draw_card != opp_card1:
-                                p1_best_hand = texas_best(hand, table + [draw_card[0]])
-                                p2_best_hand = texas_best([opp_card1[0], opp_card2[0]], table + [draw_card[0]])
+        for opp_card1 in random.sample(card_deck, 10):
+            if opp_card1 not in hand + table:
+                for opp_card2 in random.sample(card_deck, 10):
+                    if opp_card2 not in hand + table and opp_card2 != opp_card1:
+                        for draw_card in random.sample(card_deck, 10):
+                            if draw_card not in hand + table and opp_card2 != draw_card != opp_card1:
+                                p1_best_hand = texas_best(hand, table + [draw_card])
+                                p2_best_hand = texas_best([opp_card1, opp_card2], table + [draw_card])
                                 if ranking_final(p1_best_hand) > ranking_final(p2_best_hand):
                                     P1_wins += 1
                                 elif ranking_final(p1_best_hand) == ranking_final(p2_best_hand):
@@ -468,16 +468,16 @@ def winning_hand(hand, table, num_players):
 
 
     if len(table) == 3:
-        for opp_card1 in list(combinations(card_deck, 1)):
-            if opp_card1[0] not in hand + table:
-                for opp_card2 in list(combinations(card_deck, 1)):
-                    if opp_card2[0] not in hand + table and opp_card2 != opp_card1:
-                        for draw_card in list(combinations(card_deck, 1)):
-                            if draw_card[0] not in hand + table and opp_card2 != draw_card != opp_card1:
-                                for draw_card2 in list(combinations(card_deck, 1)):
-                                    if draw_card2[0] not in hand + table and opp_card2 != draw_card2 != opp_card1 and draw_card2 != draw_card:
-                                        p1_best_hand = texas_best(hand, table, + [draw_card[0], draw_card2[0]])
-                                        p2_best_hand = texas_best([opp_card1[0], opp_card2[0]], table + [draw_card[0], draw_card2[0]])
+        for opp_card1 in random.sample(card_deck, 10):
+            if opp_card1 not in hand + table:
+                for opp_card2 in random.sample(card_deck, 10):
+                    if opp_card2 not in hand + table and opp_card2 != opp_card1:
+                        for draw_card in random.sample(card_deck, 10):
+                            if draw_card not in hand + table and opp_card2 != draw_card != opp_card1:
+                                for draw_card2 in random.sample(card_deck, 10):
+                                    if draw_card2 not in hand + table and opp_card2 != draw_card2 != opp_card1 and draw_card2 != draw_card:
+                                        p1_best_hand = texas_best(hand, table + [draw_card, draw_card2])
+                                        p2_best_hand = texas_best([opp_card1, opp_card2], table + [draw_card, draw_card2])
                                         if ranking_final(p1_best_hand) > ranking_final(p2_best_hand):
                                             P1_wins += 1
                                         elif ranking_final(p1_best_hand) == ranking_final(p2_best_hand):
@@ -495,6 +495,76 @@ def winning_hand(hand, table, num_players):
         group_lose_prob = 1 - group_win_prob - group_tie_prob
         
         return "Win prob: {0}".format(group_win_prob, ".2f") #, group_lose_prob, group_tie_prob)
+    
+    
+    if len(table) == 2:
+        #print(list(random.sample(card_deck, 15)))
+        for opp_card1 in random.sample(card_deck, 4):
+            if opp_card1 not in hand + table:
+                for opp_card2 in random.sample(card_deck, 4):
+                    if opp_card2 not in hand + table and opp_card2 != opp_card1:
+                        for draw_card in random.sample(card_deck, 4):
+                            if draw_card not in hand + table and opp_card2 != draw_card != opp_card1:
+                                for draw_card2 in random.sample(card_deck, 4):
+                                    if draw_card2 not in hand + table and opp_card2 != draw_card2 != opp_card1 and draw_card2 != draw_card:
+                                        for draw_card3 in random.sample(card_deck, 4):
+                                            if draw_card3 not in hand + table and opp_card2 != draw_card3 != opp_card1 and draw_card3 != draw_card and draw_card3 != draw_card2:
+                                                p1_best_hand = texas_best(hand, table + [draw_card, draw_card2, draw_card3])
+                                                p2_best_hand = texas_best([opp_card1, opp_card2], table + [draw_card, draw_card2, draw_card3])
+                                                if ranking_final(p1_best_hand) > ranking_final(p2_best_hand):
+                                                    P1_wins += 1
+                                                elif ranking_final(p1_best_hand) == ranking_final(p2_best_hand):
+                                                    ties += 1
+                                                else:
+                                                    P2_wins += 1
+
+        total = P1_wins + P2_wins + ties
+        P1_win_prob = P1_wins / total
+        P2_win_prob = P2_wins / total
+        tie_prob = ties / total
+
+        group_win_prob = P1_win_prob ** (num_players-1)
+        group_tie_prob = 1 - ((1-tie_prob)**(num_players-1))
+        group_lose_prob = 1 - group_win_prob - group_tie_prob
+        
+        return "Win prob: {0}".format(group_win_prob, ".2f") #, group_lose_prob, group_tie_prob)
+    
+    
+    if len(table) == 1:
+        #print(list(random.sample(card_deck, 15)))
+        for opp_card1 in random.sample(card_deck, 2):
+            if opp_card1 not in hand + table:
+                for opp_card2 in random.sample(card_deck, 2):
+                    if opp_card2 not in hand + table and opp_card2 != opp_card1:
+                        for draw_card in random.sample(card_deck, 2):
+                            if draw_card not in hand + table and opp_card2 != draw_card != opp_card1:
+                                for draw_card2 in random.sample(card_deck, 2):
+                                    if draw_card2 not in hand + table and opp_card2 != draw_card2 != opp_card1 and draw_card2 != draw_card:
+                                        for draw_card3 in random.sample(card_deck, 2):
+                                            if draw_card3 not in hand + table and opp_card2 != draw_card3 != opp_card1 and draw_card3 != draw_card and draw_card3 != draw_card2:
+                                                for draw_card4 in random.sample(card_deck, 2):
+                                                    if draw_card4 not in hand + table and opp_card2 != draw_card4 != opp_card1 and draw_card4 != draw_card and draw_card4 != draw_card2 and draw_card4 != draw_card3:
+                                                        p1_best_hand = texas_best(hand, table + [draw_card, draw_card2, draw_card3, draw_card4])
+                                                        p2_best_hand = texas_best([opp_card1, opp_card2], table + [draw_card, draw_card2, draw_card3, draw_card4])
+                                                        if ranking_final(p1_best_hand) > ranking_final(p2_best_hand):
+                                                            P1_wins += 1
+                                                        elif ranking_final(p1_best_hand) == ranking_final(p2_best_hand):
+                                                            ties += 1
+                                                        else:
+                                                            P2_wins += 1
+
+        total = P1_wins + P2_wins + ties
+        P1_win_prob = P1_wins / total
+        P2_win_prob = P2_wins / total
+        tie_prob = ties / total
+
+        group_win_prob = P1_win_prob ** (num_players-1)
+        group_tie_prob = 1 - ((1-tie_prob)**(num_players-1))
+        group_lose_prob = 1 - group_win_prob - group_tie_prob
+        
+        return "Win prob: {0}".format(group_win_prob, ".2f") #, group_lose_prob, group_tie_prob)
+    
+    
 
     elif len(table) == 0:
         first_number = hand[0].number
@@ -518,7 +588,7 @@ def winning_hand(hand, table, num_players):
 
         return "Win prob: {0}".format(group_win_prob, ".2f")
 
-print("A" + "2" + "d" in two_card_probs)
+#print("A" + "2" + "d" in two_card_probs)
 
 table = []#Card("K", "h"), Card("J", "h"), Card("T", "h")]#, Card("T", "s")]#, Card("4", "h")]
 

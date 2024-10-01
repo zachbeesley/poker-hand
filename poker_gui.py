@@ -111,6 +111,7 @@ def show_image(card_suit, card_num, card_amount):
 
     d[card_amount].configure(image=img)
     d[card_amount].image = img
+    print('hello')
 
 def start_over():
         app.text.config(text="What is your first card?")
@@ -213,7 +214,7 @@ def cont():
         best_card = hand_type(texas_best(app.hand, app.table))
         app.best_hand.config(text="Best Hand: {}".format(best_card))
 
-    if app.change >= 5 or app.change == 1:
+    if app.change >= 3 or app.change == 1:
         #app.waiting.config(text="Getting Stats...")
         app.stats.config(text=winning_hand(app.hand, app.table, app.num_of_players))
         #app.waiting.config(text="")
@@ -307,5 +308,5 @@ btn_king.grid(row=7, column=5, sticky=W)
 
 root.mainloop()
 
-print(app.hand)
-print(app.table)
+#print(app.hand)
+#print(app.table)
